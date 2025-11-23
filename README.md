@@ -61,36 +61,15 @@ lib/
 ### 1. Stateless vs Stateful Widgets
 
 #### StatelessWidget
-- **What it is**: A widget that doesn't change once it's built
+- **What it is**: A widget that doesn't change once it's built. It's immutable.
 - **Used in**: `Home` and `ResultScreen`
-- **Example**: The home screen doesn't need to update its content based on user interaction
-- **Why use it**: More efficient for static content, simpler to implement
+- **Example**: The home screen doesn't need to update its content based on user interaction - it just displays static welcome content
+- **Why use it**: More efficient for static content, simpler to implement, better performance
+- **Key characteristic**: No `setState()` method, no mutable state variables
 
 ```dart
 class Home extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(...);
-  }
-}
-```
-
-#### StatefulWidget
-- **What it is**: A widget that can change its content dynamically
-- **Used in**: `InformationScreen`
-- **Example**: The information screen updates when users change gender, height, weight, or age
-- **Why use it**: Necessary when the UI needs to react to user input or data changes
-
-```dart
-class InformationScreen extends StatefulWidget {
-  @override
-  State<InformationScreen> createState() => _InformationScreenState();
-}
-
-class _InformationScreenState extends State<InformationScreen> {
-  // Mutable state variables
-  String selectedGender = 'Male';
-  int weight = 75;
+  const Home({super.key});
   
   @override
   Widget build(BuildContext context) {
@@ -99,98 +78,210 @@ class _InformationScreenState extends State<InformationScreen> {
 }
 ```
 
+**When to use StatelessWidget:**
+- Screens with static content
+- Widgets that only depend on configuration (constructor parameters)
+- Result/display screens that just show data without user interaction changing the display
+
+#### StatefulWidget
+- **What it is**: A widget that can change its content dynamically. It has a separate State object that holds mutable data.
+- **Used in**: `InformationScreen`
+- **Example**: The information screen updates when users change gender, select height, adjust weight, or modify age
+- **Why use it**: Necessary when the UI needs to react to user input or data changes
+- **Key characteristic**: Has a `State` object with mutable variables and `setState()` method
+
+```dart
+class InformationScreen extends StatefulWidget {
+  const InformationScreen({super.key});
+  
+  @override
+  State<InformationScreen> createState() => _InformationScreenState();
+}
+
+class _InformationScreenState extends State<InformationScreen> {
+  // Mutable state variables - these can change
+  String selectedGender = 'Male';
+  bool isFeet = true;
+  double heightInMeters = 1.80;
+  int weight = 75;
+  int age = 24;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(...);
+  }
+}
+```
+
+**When to use StatefulWidget:**
+- Forms with user input
+- Screens with toggles, sliders, or counters
+- Any widget where the display needs to update based on user interaction
+- Widgets that need to maintain local state
+
 ### 2. Layout Widgets
 
 #### Scaffold
 - **Purpose**: Provides the basic visual structure for Material Design apps
-- **Components**: AppBar, Body, FloatingActionButton, Drawer, etc.
+- **What it includes**: 
+  - AppBar (top navigation bar)
+  - Body (main content area)
+  - FloatingActionButton (optional floating button)
+  - Drawer (optional side menu)
+  - BottomNavigationBar (optional bottom navigation)
+  - backgroundColor (screen background color)
 - **Usage**: Every screen in this app uses Scaffold as the root widget
+- **Why important**: Gives your app a consistent, professional structure
 
 ```dart
 Scaffold(
-  appBar: AppBar(...),  // Top bar
-  body: Column(...),    // Main content
-  backgroundColor: Colors.white,  // Background color
+  appBar: AppBar(
+    title: Text('My Results'),
+    leading: IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () => Navigator.pop(context),
+    ),
+  ),
+  backgroundColor: Color(0xFFF5F5F5),
+  body: Column(...),  // Main content
 )
 ```
 
+**Real usage in our app:**
+- Home screen: No AppBar, just body with SafeArea
+- InformationScreen: AppBar with title "My Information" and back button
+- ResultScreen: AppBar with title "My Results" and back button
+
 #### Column
 - **Purpose**: Arranges children widgets vertically (top to bottom)
-- **Properties**:
-  - `mainAxisAlignment`: Controls vertical spacing
-  - `crossAxisAlignment`: Controls horizontal alignment
+- **Main Properties**:
+  - `mainAxisAlignment`: Controls vertical spacing (start, center, end, spaceBetween, spaceAround, spaceEvenly)
+  - `crossAxisAlignment`: Controls horizontal alignment (start, center, end, stretch)
+  - `mainAxisSize`: min (takes minimum space) or max (takes all available space)
   - `children`: List of widgets to display
+- **Usage**: Used extensively in all screens for vertical layout
 
 ```dart
 Column(
-  mainAxisAlignment: MainAxisAlignment.center,  // Center vertically
-  crossAxisAlignment: CrossAxisAlignment.start, // Align to left
+  mainAxisAlignment: MainAxisAlignment.center,     // Center vertically
+  crossAxisAlignment: CrossAxisAlignment.start,    // Align to left
   children: [
-    Text('First'),
-    Text('Second'),
-    Text('Third'),
+    Text('Gender'),
+    SizedBox(height: 12),  // Spacing
+    Row(...),              // Gender buttons
   ],
 )
 ```
 
+**Real examples from our app:**
+- InformationScreen: Main body uses Column to stack gender, height, weight/age sections vertically
+- ResultScreen: Uses Column to stack BMI card, scale, and recommendation vertically
+- Inside containers: Weight and Age cards use Column to stack label, value, and buttons
+
 #### Row
 - **Purpose**: Arranges children widgets horizontally (left to right)
-- **Similar to Column** but in horizontal direction
+- **Properties**: Similar to Column but in horizontal direction
+- **Usage**: Used for side-by-side layouts
 
 ```dart
 Row(
   mainAxisAlignment: MainAxisAlignment.spaceBetween,
   children: [
     Icon(Icons.male),
+    SizedBox(width: 8),
     Text('Male'),
   ],
 )
 ```
 
+**Real usage in our app:**
+- Gender selection: Male and Female buttons side by side
+- Weight and Age: Two containers displayed side by side using Row
+- Height display: Min value, current value, max value in a row
+- BMI scale labels: Four category labels displayed horizontally
+- Icon + Text combinations: Throughout the app (e.g., info icon + text)
+
 #### Container
-- **Purpose**: A versatile widget for styling and positioning
-- **Features**: Padding, margin, decoration, size constraints
+- **Purpose**: A versatile box widget for styling and positioning
+- **Features**: 
+  - `padding`: Space inside the container
+  - `margin`: Space outside the container
+  - `decoration`: Visual styling (BoxDecoration)
+  - `width` and `height`: Size constraints
+  - `alignment`: How child is positioned inside
+  - `child`: The widget inside the container
 - **Usage**: Used extensively for creating cards and styled boxes
 
 ```dart
 Container(
   padding: EdgeInsets.all(20),
+  margin: EdgeInsets.symmetric(horizontal: 16),
   decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
-    boxShadow: [BoxShadow(...)],
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.05),
+        blurRadius: 20,
+        offset: Offset(0, 10),
+      ),
+    ],
   ),
   child: Text('Content'),
 )
 ```
 
+**Real usage in our app:**
+- White cards: Height section, Weight/Age cards, BMI result card all use Container
+- Gender buttons: Container with conditional styling based on selection
+- Illustration area: Container with light blue background (#E8F4FD)
+- Icon backgrounds: Small containers with circular shape for increment/decrement buttons
+- BMI scale bars: Containers with specific colors for each BMI category
+
 #### Expanded
-- **Purpose**: Makes a child widget fill available space
-- **Usage**: Used in Row/Column to distribute space
-- **flex**: Controls the proportion of space taken
+- **Purpose**: Makes a child widget expand to fill available space in Row/Column
+- **How it works**: Takes all remaining space after other widgets are laid out
+- **flex property**: Controls proportion of space when multiple Expanded widgets exist (default is 1)
+- **Usage**: Perfect for making responsive layouts
 
 ```dart
 Row(
   children: [
     Expanded(  // Takes half the width
-      child: Container(...),
+      flex: 1,
+      child: Container(...),  // Male button
     ),
-    SizedBox(width: 16),
+    SizedBox(width: 12),
     Expanded(  // Takes half the width
-      child: Container(...),
+      flex: 1,
+      child: Container(...),  // Female button
     ),
   ],
 )
 ```
 
+**Real usage in our app:**
+- Gender buttons: Both Male and Female buttons use Expanded to take equal width
+- Weight and Age containers: Each uses Expanded to take half the row width
+- BMI scale visualization: Four colored bars use Expanded with different flex values to represent proportions
+  - Underweight (blue): flex: 185
+  - Normal (green): flex: 65
+  - Overweight (orange): flex: 50
+  - Obese (red): flex: 100
+- Text wrapping: Expanded wraps long recommendation text to prevent overflow
+
 #### Stack
-- **Purpose**: Overlays widgets on top of each other
-- **Usage**: Used in ResultScreen for BMI scale with position marker
+- **Purpose**: Overlays widgets on top of each other (like layers in Photoshop)
+- **How it works**: Children are painted in order, with later children appearing on top
+- **Usage**: Used for absolute positioning and overlapping elements
+- **Key widgets used with Stack**:
+  - `Positioned`: Places widget at specific coordinates (left, top, right, bottom)
+  - `Align`: Aligns widget within the Stack
 
 ```dart
 Stack(
   children: [
-    Container(...),  // Background
+    Container(...),  // Background layer
     Positioned(      // Positioned on top
       left: 100,
       top: 20,
@@ -199,6 +290,49 @@ Stack(
   ],
 )
 ```
+
+**Real usage in our app:**
+- Home screen: Stack with centered main content and positioned info icon (top-right) and Start button (bottom-right)
+- Illustration area: Stack with decorative icons positioned around central emojis
+- BMI scale pointer: Uses LayoutBuilder with Stack to position arrow indicator above the colored scale
+- Decorative elements: Heart, water drop, eco, and sports icons positioned at specific locations
+
+#### SingleChildScrollView
+- **Purpose**: Makes content scrollable when it overflows the screen
+- **Why needed**: Prevents overflow errors on small screens or when keyboard appears
+- **How it works**: Wraps content and allows vertical or horizontal scrolling
+- **Usage**: Essential for forms and long content
+
+```dart
+SingleChildScrollView(
+  child: Column(
+    children: [
+      // All your widgets that might overflow
+    ],
+  ),
+)
+```
+
+**Real usage in our app:**
+- InformationScreen: Wraps the entire body so users can scroll if content doesn't fit (especially on small screens or when keyboard is visible)
+- ResultScreen: Allows scrolling through BMI value, scale, and recommendations
+- Important for accessibility: Users with different font size settings or smaller screens can still access all content
+
+#### SafeArea
+- **Purpose**: Ensures content doesn't overlap with system UI elements
+- **What it avoids**: iPhone notch, status bar, home indicator, rounded corners
+- **How it works**: Adds automatic padding to keep content in safe area
+- **Usage**: Typically wraps the body content
+
+```dart
+SafeArea(
+  child: Column(...),
+)
+```
+
+**Real usage in our app:**
+- Home screen: Wraps the Stack to ensure info icon and content don't overlap with notch or status bar
+- Not needed in InformationScreen/ResultScreen: AppBar already handles this automatically
 
 ### 3. Interactive Widgets
 
