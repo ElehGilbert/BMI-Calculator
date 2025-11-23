@@ -16,171 +16,176 @@ class Home extends StatelessWidget {
       // SafeArea ensures content doesn't overlap with system UI (notch, status bar)
       body: SafeArea(
         // Main content - full screen
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Info icon button in the top-right corner
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[300]!, width: 1.5),
-                    shape: BoxShape.circle,
+        child: Stack(
+          children: [
+            // Info icon button in the top-right corner
+            Positioned(
+              top: 20,
+              right: 20,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[300]!, width: 1.5),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.info_outline,
+                    color: Color(0xFF7F8C8D),
+                    size: 20,
                   ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.info_outline,
-                      color: Color(0xFF7F8C8D),
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      // This would show app information (you can implement a dialog)
-                    },
-                  ),
+                  onPressed: () {
+                    // This would show app information (you can implement a dialog)
+                  },
                 ),
               ),
-              
-              const SizedBox(height: 20),
-              
-              // Illustration area with decorative elements
-              Container(
-                height: 240,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE8F4FD),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Stack(
+            ),
+            
+            // Centered content
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Decorative elements positioned around
-                    Positioned(
-                      top: 20,
-                      left: 30,
-                      child: CustomPaint(
-                        size: const Size(40, 20),
-                        painter: CloudPainter(),
+                    // Illustration area with decorative elements
+                    Container(
+                      height: 240,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8F4FD),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                    ),
-                    Positioned(
-                      top: 15,
-                      right: 20,
-                      child: Icon(Icons.access_time, color: Colors.grey[400], size: 30),
-                    ),
-                    Positioned(
-                      bottom: 30,
-                      left: 20,
-                      child: Icon(Icons.eco, color: Colors.green[300], size: 35),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      right: 20,
-                      child: Icon(Icons.sports_basketball, color: Colors.blue[300], size: 35),
-                    ),
-                    Positioned(
-                      top: 30,
-                      left: 20,
-                      child: Icon(Icons.favorite, color: Colors.blue[600], size: 35),
-                    ),
-                    Positioned(
-                      top: 50,
-                      right: 40,
-                      child: Icon(Icons.water_drop, color: Colors.blue[400], size: 30),
-                    ),
-                    
-                    // Central illustration
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Stack(
                         children: [
-                          Text(
-                            '🏃‍♂️',
-                            style: TextStyle(fontSize: 90),
+                          // Decorative elements positioned around
+                          Positioned(
+                            top: 20,
+                            left: 30,
+                            child: CustomPaint(
+                              size: const Size(40, 20),
+                              painter: CloudPainter(),
+                            ),
                           ),
-                          const SizedBox(width: 10),
-                          Text(
-                            '🏃‍♀️',
-                            style: TextStyle(fontSize: 90),
+                          Positioned(
+                            top: 15,
+                            right: 20,
+                            child: Icon(Icons.access_time, color: Colors.grey[400], size: 30),
+                          ),
+                          Positioned(
+                            bottom: 30,
+                            left: 20,
+                            child: Icon(Icons.eco, color: Colors.green[300], size: 35),
+                          ),
+                          Positioned(
+                            bottom: 20,
+                            right: 20,
+                            child: Icon(Icons.sports_basketball, color: Colors.blue[300], size: 35),
+                          ),
+                          Positioned(
+                            top: 30,
+                            left: 20,
+                            child: Icon(Icons.favorite, color: Colors.blue[600], size: 35),
+                          ),
+                          Positioned(
+                            top: 50,
+                            right: 40,
+                            child: Icon(Icons.water_drop, color: Colors.blue[400], size: 30),
+                          ),
+                          
+                          // Central illustration
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '🏃‍♂️',
+                                  style: TextStyle(fontSize: 100),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  '🏃‍♀️',
+                                  style: TextStyle(fontSize: 100),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 30),
+                    
+                    // Main heading text
+                    const Text(
+                      'Modern BMI Calculator',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold, // Makes text bold
+                        color: Color(0xFF2C3E50),
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // Description text explaining the app
+                    const Text(
+                      'Discover your BMI with our app! Enter your height and weight to get valuable insights into your health. Let\'s start your wellness journey today!',
+                      textAlign: TextAlign.center, // Center-align the text
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF7F8C8D),
+                        height: 1.5, // Line height for better readability
                       ),
                     ),
                   ],
                 ),
               ),
-              
-              const SizedBox(height: 30),
-              
-              // Main heading text
-              const Text(
-                'Calculate my BMI',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold, // Makes text bold
-                  color: Color(0xFF2C3E50),
-                ),
-              ),
-              
-              const SizedBox(height: 16),
-              
-              // Description text explaining the app
-              const Text(
-                'Discover your BMI with our app! Enter your height and weight to get valuable insights into your health. Let\'s start your wellness journey today!',
-                textAlign: TextAlign.center, // Center-align the text
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF7F8C8D),
-                  height: 1.5, // Line height for better readability
-                ),
-              ),
-              
-              const Spacer(),
-              
-              // Start button - navigates to the information screen
-              Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  // onPressed defines what happens when button is tapped
-                  onPressed: () {
-                    // Navigator.push adds a new screen on top of current screen
-                    // This is how we navigate between screens in Flutter
-                    Navigator.push(
-                      context, // Context provides location in widget tree
-                      // MaterialPageRoute creates a platform-adaptive page transition
-                      MaterialPageRoute(
-                        builder: (context) => const InformationScreen(),
-                      ),
-                    );
-                  },
-                  // Style the button
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4A90E2), // Blue background
-                    foregroundColor: Colors.white, // White text
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+            ),
+            
+            // Start button - positioned at bottom right
+            Positioned(
+              bottom: 32,
+              right: 32,
+              child: ElevatedButton(
+                // onPressed defines what happens when button is tapped
+                onPressed: () {
+                  // Navigator.push adds a new screen on top of current screen
+                  // This is how we navigate between screens in Flutter
+                  Navigator.push(
+                    context, // Context provides location in widget tree
+                    // MaterialPageRoute creates a platform-adaptive page transition
+                    MaterialPageRoute(
+                      builder: (context) => const InformationScreen(),
                     ),
-                    elevation: 5, // Shadow depth
+                  );
+                },
+                // Style the button
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF4A90E2), // Blue background
+                  foregroundColor: Colors.white, // White text
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  // Button content: text and icon in a row
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Start',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  elevation: 5, // Shadow depth
+                ),
+                // Button content: text and icon in a row
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Start',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.arrow_forward), // Arrow icon
-                    ],
-                  ),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(Icons.arrow_forward), // Arrow icon
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
