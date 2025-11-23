@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                   children: [
                     // Illustration area with decorative elements
                     Container(
-                      height: 240,
+                      height: 360,
                       decoration: BoxDecoration(
                         color: const Color(0xFFE8F4FD),
                         borderRadius: BorderRadius.circular(20),
@@ -65,11 +65,11 @@ class Home extends StatelessWidget {
                               painter: CloudPainter(),
                             ),
                           ),
-                          Positioned(
-                            top: 15,
-                            right: 20,
-                            child: Icon(Icons.access_time, color: Colors.grey[400], size: 30),
-                          ),
+                          // Positioned(
+                          //   top: 15,
+                          //   right: 20,
+                          //   // child: Icon(Icons.access_time, color: Colors.grey[400], size: 30),
+                          // ),
                           Positioned(
                             bottom: 30,
                             left: 20,
