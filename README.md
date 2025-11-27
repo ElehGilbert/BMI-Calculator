@@ -14,10 +14,10 @@ A beautiful and intuitive BMI (Body Mass Index) Calculator built with Flutter. T
 - ➕➖ Simple increment/decrement controls for weight and age
 
 ## Screenshots
-<img width="500" height="2400" alt="Screenshot_20251127-064640" src="https://github.com/user-attachments/assets/4ba13936-2f1e-42d2-8d24-a2e3d24414ce" />
-<img width="500" height="2400" alt="Screenshot_20251127-064648" src="https://github.com/user-attachments/assets/2905ad4d-276e-4651-ac65-5a128bdb93fd" />
-<img width="500" height="2400" alt="Screenshot_20251127-064656" src="https://github.com/user-attachments/assets/34023cb9-66cf-482e-8930-851b7a91f13e" />
-<img width="500" height="2400" alt="Screenshot_20251127-064700" src="https://github.com/user-attachments/assets/7e5d8ef4-ea01-4aa3-a50a-ca231c542a56" />
+<img width="300" height="1800" alt="Home Screen" src="https://github.com/user-attachments/assets/4ba13936-2f1e-42d2-8d24-a2e3d24414ce" />
+<img width="300" height="1800" alt="Information Screen" src="https://github.com/user-attachments/assets/2905ad4d-276e-4651-ac65-5a128bdb93fd" />
+<img width="300" height="1800" alt="Results Screen" src="https://github.com/user-attachments/assets/34023cb9-66cf-482e-8930-851b7a91f13e" />
+<img width="300" height="1800" alt="Results Screen" src="https://github.com/user-attachments/assets/7e5d8ef4-ea01-4aa3-a50a-ca231c542a56" />
 
 
 
